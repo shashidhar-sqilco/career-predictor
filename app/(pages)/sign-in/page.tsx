@@ -1,60 +1,58 @@
-//sign-in page.tsx
-
 "use client";
-import Link from "next/link";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+ 
+ 
+ 
+ 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { signIn } from "next-auth/react";
+import React from "react";
+import { data } from "autoprefixer";
 
-import { signIn, useSession } from 'next-auth/react';
-import type { NextRequest } from "next/server";
-
-///const response = await fetch('/api/signin/', {
-
-
-export default function SiginPage(req: NextRequest) {
-
-    const [showPassword, setShowPassword] = useState(false);
-
+const Login = () => {
+   const [showPassword, setShowPassword] = useState(false); 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const [email, setEmail] = useState('');
+   const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-
+  const [error, setError] = useState("");
     const router = useRouter();
-    const [loading, setLoading] = React.useState(false);
+   
     const [user, setUser] = React.useState({
         email: "",
         password: "",
     })
-  
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        const response = await fetch('/api/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        });
-        const data = await response.json();
-        if (response.ok) {
-            setMessage('Login successful');
-            console.log('Token:', data.token);
-            // Perform further actions like redirect or state update
-            router.push('/');
 
-        } else {
-            setMessage(data.message);
-        }
-    };
- 
-   
+  const handleInputChange = (event: any) => {
+    const { name, value } = event.target;
+    return setUser((prevInfo) => ({ ...prevInfo, [name]: value }));
+  };
+ const handleSubmit = async (e:any) => {
+    e.preventDefault();
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
 
-    const handleGoogleSignIn = () => {
+      if (res?.error) {
+        throw new Error(res.error);
+      }
+
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+      setMessage("Authentication failed. Please check your credentials.");
+    } finally {
+      setEmail("");
+      setPassword("");
+    }
+  };
+      const handleGoogleSignIn = () => {
         signIn("google", { callbackUrl: "/" });
     };
 
@@ -68,12 +66,8 @@ export default function SiginPage(req: NextRequest) {
     const handleLinkedInSignIn = () => {
         signIn("linkedIn", { callbackUrl: "/" });
     };
-
-
-
-
-    return (
-        <div className="flex justify-center mt-3 items-center min-h-screen bg-gray-300">
+  return (
+   <div className="flex justify-center mt-3 items-center min-h-screen bg-gray-300">
             <div className="sm:w-1/2 md:w-1/3 lg:w-1/4 bg-white shadow-lg rounded-xl p-8 pb-3 mt-3">
                 <h2 className="text-xl font-bold font-serif mb-2 text-center text-black">
                     Sign In With Social Network
@@ -143,9 +137,8 @@ export default function SiginPage(req: NextRequest) {
                         <input
                             type="email"
                             id="email"
-                            onChange={(e) => setEmail(e.target.value)}
+                           onChange={(e) => setEmail(e.target.value)}
                             value={email}
-                         
                             className="mt-4 block w-full py-2 border-b-2 rounded border-gray-300 focus:outline-none focus:border-blue-500 sm:text-sm   text-black"
                             placeholder="Email"
                         />
@@ -155,7 +148,7 @@ export default function SiginPage(req: NextRequest) {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 id="password"
-                                value={password}
+                                 value={password}
                               
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="mt-4 block w-full py-2 border-b-2 rounded border-gray-300 focus:outline-none focus:border-blue-500 sm:text-sm  text-black"
@@ -257,4 +250,6 @@ export default function SiginPage(req: NextRequest) {
       
     );
 }
-
+ 
+ 
+export default Login;

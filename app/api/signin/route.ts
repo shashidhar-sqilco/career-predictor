@@ -1,70 +1,75 @@
-import { connect } from "@/dbConfig/dbConfig";
-import User from "@/models/userModel";
+import { connect } from "@/utils/dbConfig/dbConfig";
+import User from "@/utils/models/User";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { JWTPayload } from '@/utils/types';
-import { generateJWT } from '@/utils/generateToken';
-import { serialize } from 'cookie'
- 
- 
- 
+import { JWTPayload } from '@/utils/types'
+import { generateJWT } from '@/utils/generateToken'
+import { RegisterUserDto } from "@/utils/dtos";
+
 connect();
 
-export async function POST(req: NextRequest, res: NextResponse) {
-
-
-   
-   
+export async function POST(request: NextRequest) {
     try {
-        const body = await req.json() as { email: string, password: string };
-        const user = await User.findOne({ email: body.email });
+        const body = await request.json() as RegisterUserDto;
 
-        if (!user) {
-            return new NextResponse(
-                JSON.stringify({ message: 'User not found' }),
+        const user = await User.findOne({ email: body.email });
+        if (user) {
+            return NextResponse.json(
+                { message: 'user already exists' },
+                { status: 400 }
+            );
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(body.password, salt);
+
+        // Create a new instance of the User model
+        const newUser = new User({
+            name: body.name,
+            email: body.email,
+            password: hashedPassword,
+            phone: body.phone
+        });
+       
+
+        // Save the new user to the database
+        await newUser.save();
+
+        // Find the saved user
+        const savedUser = await User.findOne({ email: body.email });
+
+        // Check if the user exists
+        if (!savedUser) {
+            // Handle the case where the user doesn't exist
+            return NextResponse.json(
+                { message: 'User not found' },
                 { status: 404 }
             );
         }
 
-        const isPasswordMatch = await bcrypt.compare(body.password, user.password);
-        if (!isPasswordMatch) {
-            return new NextResponse(
-                JSON.stringify({ message: 'Incorrect password' }),
-                { status: 401 }
-            );
-        }
-
+        // Construct the JWT payload
         const jwtPayload: JWTPayload = {
-            id: user.id,
-            isAdmin: user.isAdmin,
-            name: user.name,
-            iat: 0,
-            exp: 60*60
+            id: newUser.id,
+            isAdmin: newUser.isAdmin,
+            name: newUser.name,
+            iat: Math.floor(Date.now() / 1000), // current time in seconds
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24), // expiration time: 1 day from now
         };
 
+        // Generate JWT token
         const token = generateJWT(jwtPayload);
-  
-        const maxAge = 60 * 60; // 1 week
 
-        // Set cookies
-         
- return NextResponse.json(
-        { message: 'Authenticated', token },
-        { status: 200, headers: { 'Set-Cookie': `token=${token}; Max-Age=${maxAge}; HttpOnly` } }
-    );
-      
-        
+        // Return the response with selected fields and token
+        return NextResponse.json({
+            id: savedUser._id,
+            name: savedUser.name,
+            isAdmin: savedUser.isAdmin,
+            token
+        }, { status: 201 });
     } catch (error: any) {
-        console.error('Internal server error:', error);
-        // Add more detailed error logging
-        if (error.stack) {
-            console.error('Stack trace:', error.stack);
-        }
-        if (error.response && error.response.data) {
-            console.error('Error response data:', error.response.data);
-        }
-        return new NextResponse(
-            JSON.stringify({ message: 'Internal server error', error }),
+        console.error(error); // Log the error for debugging
+        return NextResponse.json(
+            { message: 'internal server error' },
             { status: 500 }
         );
     }

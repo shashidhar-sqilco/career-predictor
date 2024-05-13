@@ -8,6 +8,9 @@ import FormSelect from './form';
 import Result from './result';
 import Img from './image';
 
+
+import { useSession } from 'next-auth/react';
+
 const infoCardData = [
   {
     title1: 'Number of jobs:',
@@ -24,9 +27,11 @@ const infoCardData = [
 ];
 
 const CareerPredictor: React.FC<any> = () => {
+  const { data: session } = useSession();
+  console.log(session)
   const [showRes, setShowRes] = useState(false);
   const [selectedValues, setSelectedValues] = useState({});
-
+ 
   const handleFormSubmit = (values: any) => {
     //can set the results based on these values
     console.log("selected values are:", values);

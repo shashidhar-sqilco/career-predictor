@@ -39,7 +39,7 @@ export default function SignupPage() {
             console.log(response.data); // Log the response data
 
             // Redirect the user to the sign-in page
-            router.push('/api/sign-in');
+            router.push('/sign-in');
         } catch (error) {
             console.error("Error:", error); // Log any errors
             // Optionally, you can show an error message to the user
@@ -226,7 +226,7 @@ export default function SignupPage() {
                         <p className="mt-2 text-xs text-gray-600 text-center">
                             Already a member?{" "}
                             <a
-                                href="/api/sign-in"
+                                href="/sign-in"
                                 className="  text-blue-600 hover:underline  text-xs"
                             >
                                 Sign In

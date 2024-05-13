@@ -1,27 +1,32 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import Navbar from '../components/NavBar'
+import AuthProvider from "@/components/Provider";
+import "./globals.css";
+import type { Metadata } from "next";
+import { Mulish } from "next/font/google";
+import NavBar from "@/components/NavBar";
+
 
 
 export const metadata: Metadata = {
-  title: 'Sqilco',
-  description: 'Learning is the only way ahead',
-}
+  
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body>
-        <Navbar /> 
-        <main className="relative overflow-hidden"> 
+      <body
+        suppressContentEditableWarning
+        suppressHydrationWarning
+       
+      >
+        <AuthProvider>
+          <NavBar/>
           {children}
-        </main>
-      
+        </AuthProvider>
       </body>
     </html>
-  )
+  );
 }

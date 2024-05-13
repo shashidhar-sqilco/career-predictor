@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import {JWTPayload} from '@/../utils/types'
+import {JWTPayload} from '@/./utils/types'
 
 export function generateJWT(jwtPayload: JWTPayload): string {
     const privateKey = process.env.JWT_SECRET as string;
