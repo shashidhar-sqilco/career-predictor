@@ -29,7 +29,7 @@ function NavBar() {
                         <div className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${navbar ? 'p-10 md:p-0 block' : 'hidden'}`}>
                             <ul className="h-screen md:h-auto items-center justify-center md:flex ">
                                 <li className="pb-4 text-md text-blue-950  py-3 md:px-6 text-center border-b-2 md:border-b-0 ">
-                                    <Link href="/career-predictor" onClick={() => setNavbar(!navbar)}>
+                                    <Link href="/" onClick={() => setNavbar(!navbar)}>
                                         Home
                                     </Link>
                                 </li>

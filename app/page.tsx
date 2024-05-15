@@ -10,6 +10,9 @@ import Img from './image';
 
 
 import { useSession } from 'next-auth/react';
+ 
+import { getServerSession } from 'next-auth';
+import { Navigate } from 'react-router-dom';
 
 const infoCardData = [
   {
@@ -27,12 +30,18 @@ const infoCardData = [
 ];
 
 const CareerPredictor: React.FC<any> = () => {
+  
   const { data: session } = useSession();
   console.log(session)
   const [showRes, setShowRes] = useState(false);
   const [selectedValues, setSelectedValues] = useState({});
  
-  const handleFormSubmit = (values: any) => {
+  const  handleFormSubmit = (values: any) => {
+
+    const session =   getServerSession
+    if (!session) {
+     Navigate('/sign-in')
+    }else
     //can set the results based on these values
     console.log("selected values are:", values);
     setSelectedValues(values);

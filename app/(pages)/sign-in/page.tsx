@@ -4,7 +4,7 @@
  
  
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import React from "react";
 import { data } from "autoprefixer";
@@ -53,7 +53,7 @@ const Login = () => {
     }
   };
       const handleGoogleSignIn = () => {
-        signIn("google", { callbackUrl: "/" });
+        signIn("google",{redirect:true ,  callbackUrl: "/"  });
     };
 
     const handleGitHubSignIn = () => {
