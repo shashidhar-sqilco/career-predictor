@@ -5,10 +5,10 @@ import FacebookProvider from 'next-auth/providers/facebook'
 import LinkedInProvider from "next-auth/providers/linkedin";
 import CredentialsProvider from 'next-auth/providers/credentials'
 import NextAuth from "next-auth"
-import User from "@/models/userModel";
+import User from "@/./utils/models/User";
 import { compare } from 'bcryptjs';
 
-import { connect } from '@/dbConfig/dbConfig';
+import { connect } from '@/./utils/dbConfig/dbConfig';
 import jwt from 'jsonwebtoken';
 
 
@@ -109,7 +109,8 @@ export const options: NextAuthOptions = {
         },
     },
     pages: {
-        signIn: '/api/sign-in'
+        signIn: '/api/sign-in',
+        signOut:'/'
 
     },
     session: {

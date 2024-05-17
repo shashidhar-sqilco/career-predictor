@@ -63,7 +63,7 @@ function NavBar() {
                                           
                                         </li>
                                       <li className="pb-4 text-md font-semibold text-blue-950  py-3 md:px-6 text-center border-b-2 md:border-b-0 ">
-                                            <Link href="/sign-in" onClick={() => signOut()}>
+                                            <Link href="/" onClick={() => signOut()}>
                                                 Logout
                                             </Link>
                                         </li>

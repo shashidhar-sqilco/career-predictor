@@ -1,4 +1,4 @@
-import AuthProvider from "@/components/Provider";
+import AuthProvider from "@/./utils/SessionProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
