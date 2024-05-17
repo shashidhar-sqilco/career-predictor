@@ -1,7 +1,7 @@
 "use client"
 // CareerPredictor.tsx
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Title from './title';
 import Description from './description';
 import FormSelect from './form';
@@ -9,10 +9,11 @@ import Result from './result';
 import Img from './image';
 
 
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
  
 import { getServerSession } from 'next-auth';
 import { Navigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 const infoCardData = [
   {
@@ -35,19 +36,25 @@ const CareerPredictor: React.FC<any> = () => {
   console.log(session)
   const [showRes, setShowRes] = useState(false);
   const [selectedValues, setSelectedValues] = useState({});
- 
+  const [isLoggedIn, setIsLoggedIn] = useState(!!session);
+  const router = useRouter(); 
   const  handleFormSubmit = (values: any) => {
+       if (!isLoggedIn) {
+      // User is not logged in, display a message or prompt to sign in
+      router.push('/sign-in');
+      return;
+    }
 
-    const session =   getServerSession
-    if (!session) {
-     Navigate('/sign-in')
-    }else
-    //can set the results based on these values
-    console.log("selected values are:", values);
+    // User is logged in, handle form submission
+    console.log('selected values are:', values);
     setSelectedValues(values);
     setShowRes(!showRes);
   };
 
+  useEffect(() => {
+    setIsLoggedIn(!!session);
+  },[session]);
+ 
   return (
 
     <>
@@ -56,9 +63,10 @@ const CareerPredictor: React.FC<any> = () => {
         <div className="flex-col-reverse lg:flex-row inline-flex ">
           <div className="md:mt-18 text-xl leading-7 min-ml-auto  md:ml-[108px]  text-neutral-900 md:max-lg:flex max-w-md">
             <FormSelect
-              showRes={showRes}
+               showRes={showRes}
               setShowRes={setShowRes}
               handleSubmit={handleFormSubmit}
+              isLoggedIn={isLoggedIn}
             />
           </div>
           <div className="h-auto md:ml-auto md:mt-auto mt-10 ">

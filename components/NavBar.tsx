@@ -34,7 +34,7 @@ function NavBar() {
                                     </Link>
                                 </li>
                                 <li className="pb-4 text-md text-blue-950  py-3 md:px-6 text-center border-b-2 md:border-b-0 ">
-                                    <Link href="/" onClick={() => setNavbar(!navbar)}>
+                                    <Link href="/about" onClick={() => setNavbar(!navbar)}>
                                         About
                                     </Link>
                                 </li>
