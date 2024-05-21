@@ -16,7 +16,7 @@ const Profile = () => {
         backgroundSize: "cover",
       }}
     >
-      <div className="w-full max-w-2xl grid place-items-center mx-auto py-40 gap-6 bg-slate-50">
+      <div className="w-full  grid place-items-center mx-auto py-80 px-150 gap-6 bg-white">
         <span className="text-4xl tracking-wide font-semibold capitalize text-[#5D7DF3]">
           welcome to my profile
         </span>

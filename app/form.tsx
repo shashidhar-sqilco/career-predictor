@@ -65,9 +65,10 @@ const Forms: React.FC<any> = ({ showRes, setShowRes, handleSubmit }) => {
     { value: "India", label: "India" },
     { value: "Algerie", label: "Algerie" },
   ];
+ 
 
   return (
-    <div className="my-auto items-center px-3 py-4 mr-2 max-w-[336px] text-white rounded-lg leading-[100%] ml-[108px] md:max-w-lg mt-auto max-md:px-3 ">
+    <div className="my-auto items-center px-3 py-4 mr-2 max-w-[336px] text-white rounded-lg leading-[100%] min-ml-auto  md:ml-[108px] md:max-w-lg mt-auto max-md:px-3 ">
       <Formik
         initialValues={{
           career: "",
@@ -115,7 +116,7 @@ const Forms: React.FC<any> = ({ showRes, setShowRes, handleSubmit }) => {
             />
             {!showRes?<button
               type="submit"
-              className={` h-12 rounded-md  shadow-sm justify-center font-lato mt-[22px] items-center px-4  max-md:w-full leading-100 w-[336px] text-white bg-[linear-gradient(91.2deg,_#FF8ED0_-1.28%,_#FB8971_103.24%)]`}
+              className={`h-12  min-ml-auto rounded-md shadow-sm justify-center font-lato mt-[22px] items-center px-4 max-md:w-full leading-100 w-[336px] text-white bg-[linear-gradient(91.2deg,_#FF8ED0_-1.28%,_#FB8971_103.24%)]`}
             >
             Know the scope &gt;
             </button> :
@@ -125,7 +126,7 @@ const Forms: React.FC<any> = ({ showRes, setShowRes, handleSubmit }) => {
 
                onClick={()=>{resetForm({values:initialValues});
               setShowRes(!showRes)}}
-              className={`h-12 rounded-md font-bold shadow-sm justify-center  mt-[22px] items-center px-3  max-md:w-full  leading-100 w-[336px] text-gradient-pink-orange bg-with-100 border border-pink-300`}
+              className={`h-12 rounded-md font-bold shadow-sm justify-center mt-[22px] items-center px-3 max-md:w-full leading-100 w-[336px] text-gradient-pink-orange max-md:px-3 bg-with-100 border border-pink-300`}
             >
               Reset &gt;
             </button>}

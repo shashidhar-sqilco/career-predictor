@@ -67,7 +67,7 @@ const Login = () => {
         signIn("linkedIn", { callbackUrl: "/" });
     };
   return (
-   <div className="flex justify-center mt-3 items-center min-h-screen bg-gray-300">
+   <div className="flex justify-center items-center min-h-screen bg-gray-300">
             <div className="sm:w-1/2 md:w-1/3 lg:w-1/4 bg-white shadow-lg rounded-xl p-8 pb-3 mt-3">
                 <h2 className="text-xl font-bold font-serif mb-2 text-center text-black">
                     Sign In With Social Network

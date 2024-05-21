@@ -58,7 +58,7 @@ const CareerPredictor: React.FC<any> = () => {
   return (
 
     <>
-      <div className=" max-container  flex flex-col items-center py-11 mt-10 text-base bg-white max-md:px-5">
+      <div className=" max-container pt-10  flex flex-col items-center  text-base bg-white max-h-full ">
         <Title />
         <div className="flex-col-reverse lg:flex-row inline-flex ">
           <div className="md:mt-18 text-xl leading-7 min-ml-auto  md:ml-[108px]  text-neutral-900 md:max-lg:flex max-w-md">
@@ -69,11 +69,11 @@ const CareerPredictor: React.FC<any> = () => {
               isLoggedIn={isLoggedIn}
             />
           </div>
-          <div className="h-auto md:ml-auto md:mt-auto mt-10 ">
+          <div className="h-auto md:ml-auto md:mt-auto mt-10  min-ml-auto">
             {showRes ? <Result infoCardData={infoCardData} /> : <Img />}
           </div>
         </div>
-        <div className="flex flex-row min-ml-auto mr-20 md:ml-[108px]">
+        <div className="flex flex-row min-ml-[108px]  lg:mr-20 sm:mr-4   mr-10  md:ml-10 min-lg:ml-[108px] mb-10">
           <Description />
         </div>
       </div>

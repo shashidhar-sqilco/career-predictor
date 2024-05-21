@@ -42,13 +42,12 @@ module.exports = {
       },
       
       backgroundImage: {
-        'bg-img-1': "url('/software_engineering.png')",
-        'bg-img-2': "url('/data_analytics.png')",
-        'feature-bg': "url('/feature-bg.png')",
+       
         pattern: "url('/pattern.png')",
-        'pattern-2': "url('/pattern-bg.png')",
-
-        'primary-color':"linear"
+         'pink-orange': 'linear-gradient(90deg, rgb(255,141.95,207.77) 0%, rgb(251.16,137.52,111.35) 100%)',
+        'primary-color': "linear",
+        'linear-gradient': 'linear-gradient(62deg, #f6ca45, #ee7983)',
+            'gradient-to-r-custom': 'linear-gradient(62deg, #f6ca45, #ee7983)'
       },
       screens: {
         xs: '400px',
